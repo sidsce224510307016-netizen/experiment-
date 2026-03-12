@@ -14,13 +14,11 @@
 <style>
 
 :root{
-
 --royal-blue:#112250;
 --sapphire:#3C507D;
 --quicksand:#E0C58F;
 --swan-wing:#F5F0E9;
 --shellstone:#D9CBC2;
-
 }
 
 *{
@@ -30,83 +28,95 @@ box-sizing:border-box;
 }
 
 body{
-
 font-family:Arial, sans-serif;
 background:var(--royal-blue);
 color:var(--swan-wing);
 overflow-x:hidden;
-
-}
-
-section{
-
-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:40px;
-
-}
-
-h1{
-font-size:60px;
-margin-bottom:20px;
-}
-
-h2{
-font-size:40px;
-margin-bottom:20px;
-}
-
-p{
-max-width:700px;
-line-height:1.6;
-}
-
-button{
-
-background:var(--quicksand);
-color:var(--royal-blue);
-border:none;
-padding:16px 40px;
-border-radius:40px;
-font-size:14px;
-cursor:pointer;
-margin-top:20px;
-
 }
 
 /* HERO */
 
 .hero{
-
+height:300vh;
 position:relative;
+}
 
+.hero-pin{
+position:sticky;
+top:0;
+height:100vh;
+width:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+overflow:hidden;
 }
 
 canvas{
-
 position:absolute;
 top:0;
 left:0;
 width:100%;
 height:100%;
 z-index:-1;
-
 }
 
-/* CARD STYLE */
+/* HERO TEXT */
+
+.hero-text{
+max-width:700px;
+padding:20px;
+}
+
+.hero-text h1{
+font-size:60px;
+margin-bottom:20px;
+}
+
+.hero-text p{
+font-size:18px;
+line-height:1.6;
+}
+
+button{
+margin-top:25px;
+padding:16px 40px;
+border:none;
+border-radius:40px;
+background:var(--quicksand);
+color:var(--royal-blue);
+font-size:14px;
+cursor:pointer;
+}
+
+/* CONTENT SECTIONS */
+
+section{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:40px;
+}
 
 .card{
-
 background:var(--swan-wing);
 color:var(--royal-blue);
-padding:40px;
+padding:50px;
 border-radius:20px;
 max-width:700px;
 box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
 
+.card h2{
+font-size:40px;
+margin-bottom:20px;
+}
+
+.card p{
+line-height:1.6;
 }
 
 </style>
@@ -118,11 +128,13 @@ box-shadow:0 20px 60px rgba(0,0,0,0.4);
 
 <!-- HERO -->
 
-<section class="hero">
+<div class="hero">
+
+<div class="hero-pin">
 
 <canvas id="hero-canvas"></canvas>
 
-<div>
+<div class="hero-text">
 
 <h1>Stop Losing Walk-In Revenue</h1>
 
@@ -132,7 +144,9 @@ box-shadow:0 20px 60px rgba(0,0,0,0.4);
 
 </div>
 
-</section>
+</div>
+
+</div>
 
 
 <!-- WHY WE EXIST -->
@@ -143,7 +157,7 @@ box-shadow:0 20px 60px rgba(0,0,0,0.4);
 
 <h2>Why We Exist</h2>
 
-<p>Restaurants lose customers when walk-ins don't know how long they will wait.</p>
+<p>Restaurants lose customers when walk-in guests cannot predict waiting time. Chaos during peak hours leads to lost revenue and frustrated guests.</p>
 
 </div>
 
@@ -158,7 +172,7 @@ box-shadow:0 20px 60px rgba(0,0,0,0.4);
 
 <h2>The Shift</h2>
 
-<p>A smarter system captures walk-ins and schedules demand intelligently.</p>
+<p>A smarter system captures walk-ins, schedules demand, and balances kitchen load automatically.</p>
 
 </div>
 
@@ -186,7 +200,7 @@ box-shadow:0 20px 60px rgba(0,0,0,0.4);
 
 <div>
 
-<h2>Join The Smart Queue Movement</h2>
+<h2 style="font-size:50px;margin-bottom:20px;">Join The Smart Queue Movement</h2>
 
 <button>Book Demo</button>
 
@@ -197,34 +211,41 @@ box-shadow:0 20px 60px rgba(0,0,0,0.4);
 
 <script>
 
-/* GSAP */
-
 gsap.registerPlugin(ScrollTrigger)
 
+/* TOTAL FRAMES */
 
+const frameCount = 144
 
-/* FRAME ANIMATION */
-
-const frameCount = 80
-
-
-const currentFrame = index =>
-`frames/frame_${index.toString().padStart(3,"0")}.jpg`
-
+/* CANVAS */
 
 const canvas = document.getElementById("hero-canvas")
 const context = canvas.getContext("2d")
 
+function resizeCanvas(){
 
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
+}
+
+resizeCanvas()
+window.addEventListener("resize", resizeCanvas)
+
+/* IMAGE ARRAY */
 
 const images = []
+const hero = { frame:0 }
 
-const hero = {frame:0}
+/* FRAME PATH */
 
+function currentFrame(index){
 
+return `frames/ezgif-frame-${String(index+1).padStart(3,"0")}.jpg`
+
+}
+
+/* PRELOAD FRAMES */
 
 for(let i=0;i<frameCount;i++){
 
@@ -235,30 +256,37 @@ images.push(img)
 
 }
 
-
-images[0].onload = render
-
+/* DRAW IMAGE */
 
 function render(){
 
 context.clearRect(0,0,canvas.width,canvas.height)
 
-context.drawImage(images[hero.frame],0,0,canvas.width,canvas.height)
+const img = images[hero.frame]
+
+if(img){
+
+context.drawImage(img,0,0,canvas.width,canvas.height)
 
 }
 
+}
 
+/* WAIT FOR FIRST IMAGE */
+
+images[0].onload = () => {
+
+render()
+
+}
 
 /* SCROLL CONTROL */
 
 ScrollTrigger.create({
 
 trigger:".hero",
-
 start:"top top",
-
-end:"bottom top",
-
+end:"bottom bottom",
 scrub:1,
 
 onUpdate:self=>{
@@ -268,6 +296,25 @@ hero.frame = Math.floor(self.progress*(frameCount-1))
 requestAnimationFrame(render)
 
 }
+
+})
+
+/* CARD REVEAL */
+
+gsap.utils.toArray(".card").forEach(card=>{
+
+gsap.from(card,{
+
+y:120,
+opacity:0,
+duration:1.2,
+
+scrollTrigger:{
+trigger:card,
+start:"top 80%"
+}
+
+})
 
 })
 
