@@ -1,1 +1,95 @@
 
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restro | Digital Storytelling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body style="margin: 0; padding: 0; background-color: #DCD7C9; font-family: 'Jost', sans-serif; color: #2C3639; overflow-x: hidden;">
+
+    <nav style="position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; padding: 20px 40px; z-index: 1000; box-sizing: border-box;">
+        <div style="font-weight: 600; letter-spacing: 2px; font-size: 14px; color: #2C3639;">RESTRO</div>
+        <div style="font-size: 24px; cursor: pointer;">☰</div>
+    </nav>
+
+    <section style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: #2C3639; color: #DCD7C9; padding: 0 20px;">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(40px, 8vw, 80px); margin-bottom: 20px;">Redefining the<br><i style="font-weight: 400;">Dining Experience</i></h1>
+        <button style="background: #A27B5B; color: #DCD7C9; border: none; padding: 18px 48px; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: 0.3s;" onmouseover="this.style.backgroundColor='#3F4E4F'" onmouseout="this.style.backgroundColor='#A27B5B'">Explore Vision</button>
+    </section>
+
+    <section style="min-height: 100vh; padding: 100px 40px; display: flex; align-items: center; background-color: #DCD7C9;">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+            <div>
+                <span style="font-size: 10px; letter-spacing: 4px; opacity: 0.6;">01. THE PROBLEM</span>
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 42px; margin: 20px 0;">Chaos in the<br><i>Modern Kitchen</i></h2>
+                <p style="line-height: 1.8; opacity: 0.8; font-size: 18px;">Traditional systems lead to revenue loss and customer dissatisfaction. We identified the gap between service and speed.</p>
+            </div>
+            <div style="background: #F5F3EE; height: 500px; width: 100%; border-radius: 4px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; color: #A27B5B; font-style: italic; border: 1px solid rgba(44,54,57,0.1);">
+                [Framer Wireframe Image: Chaos vs Precision]
+            </div>
+        </div>
+    </section>
+
+    <section style="height: 100vh; background: #3F4E4F; color: #DCD7C9; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+        <div style="width: 1px; height: 100px; background: #A27B5B; margin-bottom: 40px;"></div>
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 40px; max-width: 600px;">A fundamental shift in <i>operational logic.</i></h2>
+        <p style="letter-spacing: 4px; font-size: 10px; margin-top: 30px; opacity: 0.6;">FROM MANUAL TO AUTONOMOUS</p>
+    </section>
+
+    <section style="padding: 100px 40px; background-color: #DCD7C9;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 44px; margin-bottom: 60px;">How It Works</h2>
+            <div style="display: flex; gap: 40px;">
+                <div style="flex: 1; border-left: 2px solid #2C3639; padding-left: 30px; margin-bottom: 40px;">
+                    <h3 style="font-size: 11px; letter-spacing: 3px;">01. INTEGRATION</h3>
+                    <p style="font-size: 15px;">Seamlessly connect your existing hardware to the Restro cloud.</p>
+                </div>
+                <div style="flex: 1; border-left: 2px solid #A27B5B; padding-left: 30px; margin-bottom: 40px;">
+                    <h3 style="font-size: 11px; letter-spacing: 3px;">02. OPTIMIZATION</h3>
+                    <p style="font-size: 15px;">AI-driven queue management reduces wait times by 40%.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #F5F3EE; padding: 100px 40px;">
+        <div style="display: flex; gap: 20px; max-width: 1200px; margin: 0 auto;">
+            <div style="flex: 1; background: #DCD7C9; padding: 40px; border: 1px solid #2C3639; height: 300px;">
+                <div style="font-size: 30px; margin-bottom: 20px;">✦</div>
+                <h4 style="font-family: 'Playfair Display', serif; font-size: 24px;">Scalability</h4>
+                <p style="font-size: 12px; margin-top: 10px;">Grows with your revenue, from single cafe to global chain.</p>
+            </div>
+            <div style="flex: 1; background: #2C3639; color: #DCD7C9; padding: 40px; height: 300px;">
+                <div style="font-size: 30px; margin-bottom: 20px; color: #A27B5B;">✦</div>
+                <h4 style="font-family: 'Playfair Display', serif; font-size: 24px;">Precision</h4>
+                <p style="font-size: 12px; margin-top: 10px;">Zero-error order processing and real-time analytics.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll reveal logic
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                const top = window.scrollY;
+                const offset = section.offsetTop - 300;
+                if (top >= offset) {
+                    section.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Initialize sections for reveal
+        document.querySelectorAll('section').forEach(s => {
+            s.style.opacity = '0';
+            s.style.transform = 'translateY(20px)';
+        });
+        document.querySelector('section').style.opacity = '1'; // Hero always visible
+    </script>
+</body>
+</html>
