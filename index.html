@@ -217,25 +217,37 @@ gsap.registerPlugin(ScrollTrigger)
 
 const frameCount = 144
 
-/* CANVAS */
+
+/* CANVAS SETUP */
 
 const canvas = document.getElementById("hero-canvas")
 const context = canvas.getContext("2d")
 
-function resizeCanvas(){
+function setupCanvas(){
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+const dpr = window.devicePixelRatio || 1
+
+canvas.width = window.innerWidth * dpr
+canvas.height = window.innerHeight * dpr
+
+canvas.style.width = window.innerWidth + "px"
+canvas.style.height = window.innerHeight + "px"
+
+context.setTransform(1,0,0,1,0,0)
+context.scale(dpr,dpr)
 
 }
 
-resizeCanvas()
-window.addEventListener("resize", resizeCanvas)
+setupCanvas()
 
-/* IMAGE ARRAY */
+window.addEventListener("resize",setupCanvas)
+
+
+/* IMAGE STORAGE */
 
 const images = []
-const hero = { frame:0 }
+const hero = {frame:0}
+
 
 /* FRAME PATH */
 
@@ -245,7 +257,8 @@ return `frames/ezgif-frame-${String(index+1).padStart(3,"0")}.jpg`
 
 }
 
-/* PRELOAD FRAMES */
+
+/* PRELOAD IMAGES */
 
 for(let i=0;i<frameCount;i++){
 
@@ -256,48 +269,76 @@ images.push(img)
 
 }
 
-/* DRAW IMAGE */
+
+/* HD RENDER FUNCTION */
 
 function render(){
 
-context.clearRect(0,0,canvas.width,canvas.height)
-
 const img = images[hero.frame]
 
-if(img){
+if(!img) return
 
-context.drawImage(img,0,0,canvas.width,canvas.height)
+const canvasWidth = window.innerWidth
+const canvasHeight = window.innerHeight
+
+const canvasRatio = canvasWidth / canvasHeight
+const imageRatio = img.width / img.height
+
+let drawWidth
+let drawHeight
+let offsetX = 0
+let offsetY = 0
+
+if(imageRatio > canvasRatio){
+
+drawHeight = canvasHeight
+drawWidth = img.width * (canvasHeight / img.height)
+offsetX = (canvasWidth - drawWidth)/2
+
+}else{
+
+drawWidth = canvasWidth
+drawHeight = img.height * (canvasWidth / img.width)
+offsetY = (canvasHeight - drawHeight)/2
 
 }
 
-}
+context.clearRect(0,0,canvas.width,canvas.height)
 
-/* WAIT FOR FIRST IMAGE */
-
-images[0].onload = () => {
-
-render()
+context.drawImage(img,offsetX,offsetY,drawWidth,drawHeight)
 
 }
 
-/* SCROLL CONTROL */
+
+/* WAIT FIRST FRAME */
+
+images[0].onload = render
+
+
+/* SCROLL ANIMATION */
 
 ScrollTrigger.create({
 
 trigger:".hero",
 start:"top top",
 end:"bottom bottom",
-scrub:1,
+scrub:0.5,
 
 onUpdate:self=>{
 
-hero.frame = Math.floor(self.progress*(frameCount-1))
+const frame = Math.floor(self.progress*(frameCount-1))
 
+if(frame !== hero.frame){
+
+hero.frame = frame
 requestAnimationFrame(render)
 
 }
 
+}
+
 })
+
 
 /* CARD REVEAL */
 
